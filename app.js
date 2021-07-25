@@ -4,28 +4,25 @@ const usersRoute = require('./routes/api/users');
 const authRoute = require('./routes/api/auth');
 const profileRoute = require('./routes/api/profile');
 const postRoute = require('./routes/api/posts');
+const PORT = process.env.PORT || 5000;
 
 const app = express();
 
 // connect dataBase
-connectDB()
+connectDB();
 
 // body middleware
-app.use(express.json({ extended: false }))
+app.use(express.json({ extended: false }));
 
-app.get('/' , (req , res)=>{
+app.get('/', (req, res) => {
+  res.send('hello and welcome to this app! :)');
+});
 
-   res.send('hello and welcome to this app! :)')
+app.use('/api/users', usersRoute);
+app.use('/api/auth', authRoute);
+app.use('/api/profile', profileRoute);
+app.use('/api/posts', postRoute);
 
-})
-
-app.use('/api/users', usersRoute)
-app.use('/api/auth', authRoute)
-app.use('/api/profile', profileRoute)
-app.use('/api/posts', postRoute)
-
-const PORT = process.env.PORT || 5000
-
-app.listen(PORT, ()=>{
-    console.log(`Server Started on Port ${PORT}`);
-})
+app.listen(PORT, () => {
+  console.log(`Server Started on Port ${PORT}`);
+});
